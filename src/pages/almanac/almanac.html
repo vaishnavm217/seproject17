@@ -1,21 +1,73 @@
 <!--
-  Generated template for the AlmanacPage page.
+  Generated template for the CalendarPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
+
+
   <ion-navbar>
+
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Almanac</ion-title>
+    </button>  
+
+    <ion-title>
+	 {{viewTitle}}
+	</ion-title>
+	<ion-buttons end>
+	<button ion-button icon-only (click)="addEvent()">
+	<ion-icon name="add"></ion-icon>
+	</button>
+	</ion-buttons>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="type" (ionChange)="modechange(type)">
+
+      <ion-segment-button value="month"  >
+
+        Month
+      </ion-segment-button>
+      <ion-segment-button value="week">
+        Week
+      </ion-segment-button>
+      <ion-segment-button value="day">
+        Day
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
+<ion-content>
+			<div (onCreate)="doSomething()" [ngSwitch]="type">
+				<ion-list *ngSwitchCase="'month'">
 
-<ion-content padding>
+				</ion-list>
+				<ion-list *ngSwitchCase="'week'">
 
-</ion-content>
+
+				</ion-list>
+				<ion-list *ngSwitchCase="'day'">
+
+				</ion-list>
+
+			 </div>
+
+
+							<calendar
+							 [eventSource]="eventSource"
+							 [calendarMode]="calendar.mode"
+							 [currentDate]="calendar.currentDate"
+							 (onTitleChanged)="onViewTitleChanged($event)"
+							 (onEventSelected)="onEventSelected($event)"
+							 (onTimeSelected)="onTimeSelected($event)"
+							 step="30"
+							 class="calendar" >
+							</calendar>
+
+
+
+ </ion-content>

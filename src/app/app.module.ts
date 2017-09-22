@@ -11,6 +11,7 @@ import { CoursePage } from '../pages/course/course';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { LoginPage } from '../pages/login/login';
 import { StatusBar } from '@ionic-native/status-bar';
+import { NgCalendarModule } from 'ionic2-calendar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
   ],
   imports: [
+    NgCalendarModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
