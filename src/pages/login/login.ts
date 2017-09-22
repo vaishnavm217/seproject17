@@ -24,6 +24,7 @@ import { DashboardPage } from '../dashboard/dashboard';
 export class LoginPage {
     login: {ph_number?: string, password?: string} = {};
     submitted = false;
+    faculty = false;
 
 
   constructor(public navCtrl: NavController,
@@ -51,9 +52,11 @@ export class LoginPage {
           if(this.login.ph_number=='dr.chs@iiits.in' && this.login.password=='dr.chs'){
           this.showToast("Welcome!");
           this.storage.set('isLoggedIn',true);
+          this.storage.set('faculty',true);
           //this.storage.set('userData',jsonResponse);
           this.navCtrl.setRoot(DashboardPage);
-          this.navCtrl.push(DashboardPage);
+          this.faculty = true
+          //this.navCtrl.push(DashboardPage);
           }
 
         /*  this.authService.logIn(this.login).subscribe((jsonResponse) => {
