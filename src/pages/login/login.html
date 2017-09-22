@@ -4,15 +4,42 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+<ion-content scroll="false" style="background-image: url('assets/img/backgroundimage.png'); background-size: cover;">
 
-</ion-header>
+    <ion-card style="position:absolute; bottom:2%">
+        <ion-card-header>
+        </ion-card-header>
+        <ion-card-content>
+    	<form #loginForm="ngForm" novalidate>
+    		<ion-list no-lines>
+    			<ion-item>
+    				<ion-label stacked color="primary">Email/Mobile No.</ion-label>
+    				<ion-input [(ngModel)]="login.ph_number" name="ph_number" type="text" #pnumber="ngModel" required>
+    				</ion-input>
+    			</ion-item>
+    			<p ion-text [hidden]="pnumber.valid || submitted == false" color="danger" padding-left>
+    				Email/Mobile No. is required
+    			</p>
 
+    			<ion-item>
+    				<ion-label stacked color="primary">Password</ion-label>
+    				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+    				</ion-input>
+    			</ion-item>
+    			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+    				Password is required
+    			</p>
+    		</ion-list>
 
-<ion-content padding>
+    		<ion-row responsive-sm>
+    			<ion-col>
+    				<button ion-button (click)="onLogin(loginForm)" type="submit" block>Login</button>
+    			</ion-col>
+    		</ion-row>
+            <button ion-button (click)="onForgetPassword()" color="danger" clear>Forgot password?</button>
+    	</form>
+    </ion-card-content>
+    </ion-card>
 
 </ion-content>
