@@ -50,15 +50,23 @@ export class LoginPage {
           });
           loading.present();
           if(this.login.ph_number=='dr.chs@iiits.in' && this.login.password=='dr.chs'){
-          this.showToast("Welcome!");
+          this.showToast("Welcome xyz!");
           this.storage.set('isLoggedIn',true);
           this.storage.set('faculty',true);
+          this.faculty = true;
           //this.storage.set('userData',jsonResponse);
           this.navCtrl.setRoot(DashboardPage);
-          this.faculty = true
           //this.navCtrl.push(DashboardPage);
           }
-
+          if(this.login.ph_number=='rajat.s15@iiits.in' && this.login.password=='rajat'){
+          this.showToast("Welcome xyz!");
+          this.storage.set('isLoggedIn',true);
+          this.storage.set('faculty',false);
+          this.faculty = false;
+          //this.storage.set('userData',jsonResponse);
+          this.navCtrl.setRoot(DashboardPage);
+          //this.navCtrl.push(DashboardPage);
+          }
         /*  this.authService.logIn(this.login).subscribe((jsonResponse) => {
 
               loading.dismiss();

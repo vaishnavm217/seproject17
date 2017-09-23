@@ -27,7 +27,8 @@ export class MyApp {
       { title: 'Dashboard', component: DashboardPage },
       { title: 'Almanac', component: AlmanacPage },
       { title: 'Course', component: CoursePage },
-      { title: 'Timetable', component: TimetablePage },
+      { title: 'Attendance', component: TimetablePage },
+      {title:'Logout',component: LoginPage}
     ];
 
   }

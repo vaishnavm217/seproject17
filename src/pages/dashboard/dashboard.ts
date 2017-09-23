@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the DashboardPage page.
  *
@@ -14,11 +14,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
+  name="";
+  faculty = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    this.storage.get('faculty').then((val)=>{
+      this.faculty = val;
+      console.log(this.faculty);
+    });
+    if(this.faculty==true)
+    {
+      console.log(this.faculty);
+      this.name="xyz";
+    }
+    else{
+      this.name="xyz";
+    }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
+    this.storage.get('faculty').then((val)=>{
+      this.faculty = val;
+      console.log(this.faculty);
+    });
+    if(this.faculty==true)
+    {
+      console.log(this.faculty);
+      this.name="xyz";
+    }
+    else{
+      this.name="xyz";
+    }
     console.log('ionViewDidLoad DashboardPage');
   }
 

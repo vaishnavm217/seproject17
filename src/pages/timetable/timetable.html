@@ -10,12 +10,73 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Timetable</ion-title>
+    <ion-title>Attendance</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+<ion-card>
+<ion-card-content *ngIf="faculty==true" style="text-align:center;background-color:red;color:white;">
+<h1>Start Attendance</h1>
+</ion-card-content>
 
+<ion-card-content *ngIf="faculty==false" style="text-align:center;background-color:red;color:white;">
+<h1>Attendance not started</h1>
+</ion-card-content>
+</ion-card >
+<p>Last Records</p>
+<ion-list *ngIf="faculty==true">
+<ion-item>
+<br>
+<h3>
+Software Engineering
+</h3>
+Date : 21-09-2017 10AM<br>
+Students Present : 85
+</ion-item>
+<ion-item>
+<br>
+<h3>
+Software Engineering
+</h3>
+Date : 20-09-2017 10AM<br>
+Students Present : 111
+</ion-item>
+<ion-item>
+<br>
+<h3>
+Software Engineering
+</h3>
+Date : 19-09-2017 10AM<br>
+Students Present : 100
+</ion-item>
+</ion-list>
+<ion-list *ngIf="faculty==false">
+<ion-item>
+<br>
+<h3>
+Software Engineering
+</h3>
+Date : 21-09-2017 10AM<br>
+Current Attendance : 85%
+</ion-item>
+<ion-item>
+<br>
+<h3>
+IT Systems
+</h3>
+Date : 20-09-2017 10AM<br>
+Current Attendance : 100%
+</ion-item>
+<ion-item>
+<br>
+<h3>
+Information Retrieval
+</h3>
+Date : 19-09-2017 10AM<br>
+Current Attendance : 100%
+</ion-item>
+</ion-list>
 </ion-content>
