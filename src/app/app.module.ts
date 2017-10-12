@@ -14,6 +14,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geofence } from '@ionic-native/geofence';
+import { Pro } from '@ionic/pro';
+
+const IonicPro = Pro.init('5e0172a6', {
+  appVersion: "0.0.1"
+});
+
+export class MyErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    IonicPro.monitoring.handleNewError(err);
+  }
+}
 @NgModule({
   declarations: [
     MyApp,
