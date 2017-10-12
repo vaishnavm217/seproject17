@@ -1,6 +1,8 @@
 {
   "name": "seproject17",
-  "app_id": "df6dcb4f",
+  "app_id": "5e0172a6",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
