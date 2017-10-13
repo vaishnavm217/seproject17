@@ -23,6 +23,7 @@
     "@ionic-native/core": "^4.3.1",
     "@ionic-native/geofence": "^4.3.1",
     "@ionic-native/geolocation": "^4.3.1",
+    "@ionic-native/http": "^4.3.1",
     "@ionic-native/splash-screen": "^4.3.1",
     "@ionic-native/status-bar": "^4.3.1",
     "@ionic/pro": "^1.0.9",
@@ -30,8 +31,10 @@
     "cordova-android": "~6.3.0",
     "cordova-browser": "~5.0.0",
     "cordova-plugin-add-swift-support": "^1.6.0",
+    "cordova-plugin-advanced-http": "^1.6.1",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.4",
+    "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-geofence": "^0.7.0",
     "cordova-plugin-geolocation": "^2.4.3",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -64,7 +67,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
-      }
+      },
+      "cordova-plugin-advanced-http": {}
     },
     "platforms": [
       "browser",

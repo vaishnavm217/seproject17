@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Injectable } from '@angular/core';
 import {
     IonicPage,
     NavController,
@@ -9,6 +9,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
+import { Http,Headers, RequestOptions, Response} from '@angular/http';
 /**
  * Generated class for the LoginPage page.
  *
@@ -32,7 +33,9 @@ export class LoginPage {
         public loadingCtrl: LoadingController,
         public toastCtrl: ToastController,
         public events: Events,
-        public storage: Storage) {
+        public storage: Storage,
+        public http: Http) {
+
   }
 
   ionViewDidLoad() {
@@ -46,50 +49,30 @@ export class LoginPage {
       {
           let loading = this.loadingCtrl.create({
               content: "<div>Login wait...</div>",
-              duration: 1000
           });
-          loading.present();
-          if(this.login.ph_number=='dr.chs@iiits.in' && this.login.password=='dr.chs'){
-          this.showToast("Welcome xyz!");
-          this.storage.set('isLoggedIn',true);
-          this.storage.set('faculty',true);
-          this.faculty = true;
-          //this.storage.set('userData',jsonResponse);
-          this.navCtrl.setRoot(DashboardPage);
-          //this.navCtrl.push(DashboardPage);
-          }
-          if(this.login.ph_number=='rajat.s15@iiits.in' && this.login.password=='rajat'){
-          this.showToast("Welcome xyz!");
-          this.storage.set('isLoggedIn',true);
-          this.storage.set('faculty',false);
-          this.faculty = false;
-          //this.storage.set('userData',jsonResponse);
-          this.navCtrl.setRoot(DashboardPage);
-          //this.navCtrl.push(DashboardPage);
-          }
-        /*  this.authService.logIn(this.login).subscribe((jsonResponse) => {
-
-              loading.dismiss();
-              if(jsonResponse.op_status==Constants.LOGIN_SUCCESS)
-              {
-                  this.showToast("Welcome!");
-                  this.storage.set('isLoggedIn',true);
-                  this.storage.set('userData',jsonResponse);
-                  this.navCtrl.setRoot(MainPage);
-                  this.navCtrl.push(MainPage);
-              }
-
-              else if(jsonResponse.op_status==Constants.UNKNOWN_SERVER_ERROR)
-              {
-                  this.showToast("Server Error!");
-              }
-
-              else if(jsonResponse.op_status==Constants.WRONG_USERNAME_PASSWORD)
-              {
-                  this.showToast("Invalid Credentials! Try Again");
-              }
+          //loading.present();
+          console.log(this.login);
+          let body = { 
+              "username":this.login.ph_number,
+              "password":this.login.password 
+            };
+          let headers = new Headers({
+            'Content-Type' : 'charset=utf-8'
           });
-          */
+          let options = new RequestOptions({ headers: headers});
+          this.http.post("http://10.0.3.22:9092/api/validate_user/", body,options).subscribe(data=>{
+              console.log(data);
+          });
+        //   if(this.login.ph_number=='dr.chs@iiits.in' && this.login.password=='dr.chs'){
+
+        //   this.showToast("Welcome xyz!");
+        //   this.storage.set('isLoggedIn',true);
+        //   this.storage.set('faculty',true);
+        //   this.faculty = true;
+        //   //this.storage.set('userData',jsonResponse);
+        //   this.navCtrl.setRoot(DashboardPage);
+        //   //this.navCtrl.push(DashboardPage);
+        //   }
       }
   }
   showToast(response_message:any)

@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
+import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [
     MyApp,
@@ -30,6 +31,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -46,6 +48,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     Geolocation,
+    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
