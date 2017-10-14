@@ -9,6 +9,7 @@ import { AlmanacPage } from '../pages/almanac/almanac';
 import { CoursePage } from '../pages/course/course';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { LoginPage } from '../pages/login/login';
+import { Storage } from '@ionic/storage';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,7 +20,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public storage:Storage) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -45,6 +46,12 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    if(page.title=='Logout')
+    {
+      this.storage.set("login_stat",false);
+      this.storage.set("user",null);
+      this.storage.set("personal",null);
+    }
     this.nav.setRoot(page.component);
   }
 }

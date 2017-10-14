@@ -14,12 +14,12 @@
     	<form #loginForm="ngForm" novalidate>
     		<ion-list no-lines>
     			<ion-item>
-    				<ion-label stacked color="primary">Email/Mobile No.</ion-label>
+    				<ion-label stacked color="primary">Username(LDAP ID)</ion-label>
     				<ion-input [(ngModel)]="login.ph_number" name="ph_number" type="text" #pnumber="ngModel" required>
     				</ion-input>
     			</ion-item>
-    			<p ion-text [hidden]="pnumber.valid || submitted == false" color="danger" padding-left>
-    				Email/Mobile No. is required
+    			<p ion-text [hidden]="usersubmitted == false" color="danger" padding-left>
+    				Username No. is required
     			</p>
 
     			<ion-item>
@@ -27,7 +27,7 @@
     				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
     				</ion-input>
     			</ion-item>
-    			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+    			<p ion-text [hidden]="passsubmitted == false" color="danger" padding-left>
     				Password is required
     			</p>
     		</ion-list>

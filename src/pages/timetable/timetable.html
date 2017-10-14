@@ -14,69 +14,16 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
-<ion-card>{{this.coord}}</ion-card>
-<ion-card>{{this.pos}}</ion-card>
-<ion-card>
-<ion-card-content *ngIf="faculty==true" style="text-align:center;background-color:red;color:white;">
-<h1>Start Attendance</h1>
-</ion-card-content>
-
-<ion-card-content *ngIf="faculty==false" style="text-align:center;background-color:red;color:white;">
-<h1>Attendance not started</h1>
-</ion-card-content>
-</ion-card >
-<p>Last Records</p>
-<ion-list *ngIf="faculty==true">
-<ion-item>
-<br>
-<h3>
-Software Engineering
-</h3>
-Date : 21-09-2017 10AM<br>
-Students Present : 85
-</ion-item>
-<ion-item>
-<br>
-<h3>
-Software Engineering
-</h3>
-Date : 20-09-2017 10AM<br>
-Students Present : 111
-</ion-item>
-<ion-item>
-<br>
-<h3>
-Software Engineering
-</h3>
-Date : 19-09-2017 10AM<br>
-Students Present : 100
-</ion-item>
+<ion-content>
+<button ion-button block  (click)="refress()" style="text-align:center;background-color:red;">
+<h1 style="color:white;"> {{stat}} Attendance</h1>
+</button>
+<ion-card-content style="text-align:center">
+<h1>{{mess}}</h1>
+<h1>Attendance Count:{{roll_count}}</h1>
+<ion-list>
+  <ion-item *ngFor="let i of stud_arr" ><ion-label>{{i}}</ion-label>
+    <ion-checkbox (checked)="Object(studs).keys().indexOf(i)!=-1"></ion-checkbox></ion-item>
 </ion-list>
-<ion-list *ngIf="faculty==false">
-<ion-item>
-<br>
-<h3>
-Software Engineering
-</h3>
-Date : 21-09-2017 10AM<br>
-Current Attendance : 85%
-</ion-item>
-<ion-item>
-<br>
-<h3>
-IT Systems
-</h3>
-Date : 20-09-2017 10AM<br>
-Current Attendance : 100%
-</ion-item>
-<ion-item>
-<br>
-<h3>
-Information Retrieval
-</h3>
-Date : 19-09-2017 10AM<br>
-Current Attendance : 100%
-</ion-item>
-</ion-list>
+</ion-card-content>
 </ion-content>

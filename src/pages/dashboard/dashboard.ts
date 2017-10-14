@@ -14,37 +14,15 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
-  name="";
-  faculty = false;
+  timetable : any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-    this.storage.get('faculty').then((val)=>{
-      this.faculty = val;
-      console.log(this.faculty);
+    this.storage.get("timetable").then((data)=>{
+      this.timetable = data;
     });
-    if(this.faculty==true)
-    {
-      console.log(this.faculty);
-      this.name="xyz";
-    }
-    else{
-      this.name="xyz";
-    }
-
   }
 
   ionViewDidLoad() {
-    this.storage.get('faculty').then((val)=>{
-      this.faculty = val;
-      console.log(this.faculty);
-    });
-    if(this.faculty==true)
-    {
-      console.log(this.faculty);
-      this.name="xyz";
-    }
-    else{
-      this.name="xyz";
-    }
+    
     console.log('ionViewDidLoad DashboardPage');
   }
 
