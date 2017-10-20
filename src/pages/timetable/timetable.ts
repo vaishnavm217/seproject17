@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-ang
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http,Headers, RequestOptions, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable'
 /**
  * Generated class for the TimetablePage page.
  *
@@ -11,7 +12,7 @@ import { Http,Headers, RequestOptions, Response} from '@angular/http';
  */
 
 @IonicPage()
-@Component({
+@Component({  
   selector: 'page-timetable',
   templateUrl: 'timetable.html',
 })
@@ -31,20 +32,12 @@ export class TimetablePage {
   roll_count = 0;
   stat = "Start";
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,public geolocation: Geolocation,public loadingCtrl: LoadingController, public http: Http) {
-  //   this.subscription= this.geolocation.watchPosition({enableHighAccuracy:true})
-  //   .subscribe(position => {
-  // this.coord = this.distanceInKmBetweenEarthCoordinates(position.coords.longitude,position.coords.latitude,80.025310,13.557213)*1000.0;
-  // this.pos = [position.coords.latitude,position.coords.longitude,position.coords.accuracy];
-  // });
-  //   this.storage.get('faculty').then((val)=>{
-  //     this.faculty = val;
-  //   });
   this.mess = "Attendance Not Started";
   this.http.get("http://10.0.3.22:8000/api/add_view_SC/").map(res=>res.json()).subscribe((jsonresp)=>{
     for(let i =0;i<jsonresp.length;i++)
     {
       if(jsonresp[i].Course_ID==this.course_id)
-      {
+      { 
           this.stud_arr.push(jsonresp[i].Student_ID);
       }
     }
@@ -56,10 +49,11 @@ export class TimetablePage {
     if(!this.times){
       this.times=1;
       console.log("refress1");
-    this.sub=this.geolocation.watchPosition({enableHighAccuracy:true})
+    this.sub=this.geolocation.watchPosition({enableHighAccuracy:true}).catch(this.handleError)
       .subscribe(position => {
+
         console.log("Subs went!");
-       console.log(position.coords.accuracy);
+       console.log(position);
     if(position.coords.accuracy<=30000 && this.flag)
     {
       this.secret_key = parseInt(1000+Math.random()*8999+"");
@@ -152,5 +146,9 @@ else{
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimetablePage');
   }
+  handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server Error');
+}
 
 }

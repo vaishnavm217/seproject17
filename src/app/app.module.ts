@@ -15,6 +15,10 @@ import { NgCalendarModule } from 'ionic2-calendar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
+import { DocumentViewer} from '@ionic-native/document-viewer'
 @NgModule({
   declarations: [
     MyApp,
@@ -48,7 +52,10 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     Geolocation,
-    
+    FileOpener,
+    DocumentViewer,
+    File,
+    AuthServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

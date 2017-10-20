@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { HomePage } from '../pages/home/home';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { AlmanacPage } from '../pages/almanac/almanac';
@@ -29,7 +28,7 @@ export class MyApp {
       { title: 'Almanac', component: AlmanacPage },
       { title: 'Course', component: CoursePage },
       { title: 'Attendance', component: TimetablePage },
-      {title:'Logout',component: LoginPage}
+      { title:'Logout', component: LoginPage}
     ];
 
   }
@@ -51,6 +50,7 @@ export class MyApp {
       this.storage.set("login_stat",false);
       this.storage.set("user",null);
       this.storage.set("personal",null);
+      this.storage.set("resp",null);
     }
     this.nav.setRoot(page.component);
   }

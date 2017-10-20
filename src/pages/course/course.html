@@ -17,46 +17,11 @@
 
 
 <ion-content padding>
-<ion-card>
+  <div>
+<ion-card *ngFor="let k of courses" (click)="OpenCourse('CoursedetailPage')">
   <ion-card-header>
-    Software Engineering
+    <b>{{k.Name}}</b>
   </ion-card-header>
-  <ion-card-content *ngIf="faculty==false">
-    <h2><b>Faculty: </b>Subrahmanyam Chirravuri</h2>
-      Assignments remaining: 12<br>
-        Attendance : 60%
-    </ion-card-content>
-    <ion-card-content *ngIf="faculty==true">
-      <h2><b>Current topic: </b>SLDC</h2>
-        Students : 12<br>
-      </ion-card-content>
 </ion-card>
-<ion-card>
-  <ion-card-header>
-    IT Systems
-  </ion-card-header>
-  <ion-card-content *ngIf="faculty==false">
-    <h2><b>Faculty: </b>Nagesh</h2>
-        Assignments remaining: 2<br>
-        Attendance : 80%
-  </ion-card-content>
-  <ion-card-content *ngIf="faculty==true">
-    <h2><b>Current topic: </b>DBMS</h2>
-      Students : 12<br>
-    </ion-card-content>
-</ion-card>
-<ion-card>
-  <ion-card-header>
-    Information retrieval
-  </ion-card-header>
-  <ion-card-content *ngIf="faculty==false">
-    <h2><b>Faculty: </b>Amitava</h2>
-        Assignments remaining: 3<br>
-        Attendance : 90%
-  </ion-card-content>
-  <ion-card-content *ngIf="faculty==true">
-    <h2><b>Current topic: </b>Bag of words</h2>
-      Students : 12<br>
-    </ion-card-content>
-</ion-card>
+</div>
 </ion-content>

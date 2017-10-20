@@ -91,4 +91,7 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.6.1" />
+    <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
+    <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <plugin name="cordova-plugin-document-viewer" spec="^0.9.5" />
 </widget>

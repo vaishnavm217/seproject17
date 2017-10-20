@@ -1,0 +1,86 @@
+<!--
+  Generated template for the CoursedetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Course Detail</ion-title>
+
+
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-segment  [(ngModel)]="course">
+  <ion-segment-button value="Structure">
+    Structure
+  </ion-segment-button>
+  <ion-segment-button value="Assignment">
+    Assignment
+  </ion-segment-button>
+  <ion-segment-button value="Records">
+    Records
+  </ion-segment-button>
+    <!-- <div>{{socs}}</div> -->
+  </ion-segment>
+
+<!-- </div> -->
+<div class="cl2" [ngSwitch]="course">
+
+<ion-list *ngSwitchCase="'Structure'">
+<ion-item>
+  Course Structure
+</ion-item>
+</ion-list>
+
+<ion-list *ngSwitchCase="'Assignment'">
+<ion-item>
+Assignment
+</ion-item>
+<ion-card >
+  <ion-item>
+  <ion-avatar item-start>
+    <img src="assets/img/file.png">
+  </ion-avatar>
+
+  <ion-card-header>
+    Assignment-2
+  </ion-card-header>
+  <ion-card-content>
+    <h3><b>Deadline:</b>18th Oct 2017</h3>
+    <h3> 05:30 p.m </h3>
+    <button ion-button (click)="OpenFile()" icon-start>
+        <ion-icon name="star"></ion-icon>
+          Download
+    </button>
+  </ion-card-content>
+</ion-item>
+</ion-card>
+
+</ion-list>
+
+<!-- ########################################################## -->
+<ion-list *ngSwitchCase="'Records'">
+<ion-item>
+Records
+</ion-item>
+<ion-card (click)="OpenCourse('CoursedetailPage')">
+  <ion-card-header>
+    <b>Assignment-1</b>
+  </ion-card-header>
+  <ion-card-content>
+    <h2>End Date : 10 Oct 2017 05:30 pm</h2>
+  </ion-card-content>
+</ion-card>
+</ion-list>
+
+</div>
+
+</ion-content>
