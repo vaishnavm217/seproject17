@@ -18,7 +18,8 @@ import { HttpModule } from '@angular/http';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
-import { DocumentViewer} from '@ionic-native/document-viewer'
+import { DocumentViewer} from '@ionic-native/document-viewer';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 @NgModule({
   declarations: [
     MyApp,
@@ -56,6 +57,7 @@ import { DocumentViewer} from '@ionic-native/document-viewer'
     DocumentViewer,
     File,
     AuthServiceProvider,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

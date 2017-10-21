@@ -22,8 +22,8 @@
 <h1>{{mess}}</h1>
 <h1>Attendance Count:{{roll_count}}</h1>
 <ion-list>
-  <ion-item *ngFor="let i of stud_arr" ><ion-label>{{i}}{{Object(studs).keys().indexOf(i)}}</ion-label>
-    <ion-checkbox (checked)="Object(studs).keys().indexOf(i)!=-1"></ion-checkbox></ion-item>
+  <ion-item *ngFor="let i of stud_arr" ><ion-label>{{i}}</ion-label>
+    <ion-checkbox (checked)="Object.keys(studs).indexOf(i)!=-1"></ion-checkbox></ion-item>
 </ion-list>
 </ion-card-content>
 </ion-content>

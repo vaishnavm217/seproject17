@@ -18,7 +18,7 @@
 
 <ion-content padding>
   <div>
-<ion-card *ngFor="let k of courses" (click)="OpenCourse('CoursedetailPage')">
+<ion-card *ngFor="let k of courses" (click)="OpenCourse('CoursedetailPage',k.id)">
   <ion-card-header>
     <b>{{k.Name}}</b>
   </ion-card-header>

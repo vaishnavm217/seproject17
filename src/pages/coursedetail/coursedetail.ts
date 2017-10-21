@@ -4,6 +4,10 @@ import { AlertController } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { Storage } from '@ionic/storage';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { DatePipe } from '@angular/common';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 /**
  * Generated class for the CoursedetailPage page.
  *
@@ -19,9 +23,61 @@ import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-vi
 export class CoursedetailPage {
 
   course_id : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public file : File, public fileopener: DocumentViewer) {
-  
+  course_details = {};
+  course : any;
+  students= [];
+  assignm =[]
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public file : File, public fileopener: DocumentViewer,public storage: Storage, public http:Http,public iab:InAppBrowser) {
+  this.course="Structure";
+  this.course_id=this.navParams.get("id");
+  console.log(this.course_id);
+  this.storage.get("courses").then((val)=>{
+    let temp ={};
+    console.log();
+    for(let i=0;val[i]!=undefined;i++){
+    if(val[i].Course_ID==this.course_id)
+    {
+      temp["Name"]=val[i].Course_Name;
+      temp["desp"]=val[i].Course_description;
+    }
   }
+  this.course_details=temp;
+  console.log("details",this.course_details);
+  });
+  this.http.get("https://iiitssmartattendance.herokuapp.com/api/add_view_assignments/")
+  .map(res=>res.json())
+  .subscribe((res)=>{
+    for(let i of res)
+    {
+      if(i.Course_ID==this.course_id)
+      {
+      let temp=i;
+      temp.End_Time = new Date(temp.End_Time);
+      temp.Start_Time = new Date(temp.Start_Time);
+      this.assignm.push(temp);
+    }
+    }
+    console.log("assignment",this.assignm)
+  });
+  console.log("yey",this.course_id);
+let body={
+  course_id:this.course_id
+};
+let headers = new Headers({
+  'Content-Type' : 'application/json; charset=utf-8'
+});
+let options = new RequestOptions({headers:headers});
+  this.http.post("https://iiitssmartattendance.herokuapp.com/api/courses_rel_students/",body,options)
+  .map(res=>res.json())
+  .subscribe((res)=>{
+    for(let i of Object.keys(res))
+    {
+      this.students.push({"Name":res[i].First_Name+" "+res[i].Last_Name,"Num":i});
+    }
+    console.log("lol",this.students);
+  });
+
+}
 
 
 
@@ -29,18 +85,19 @@ export class CoursedetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursedetailPage');
   }
-  OpenFile(){
-    console.log(this.file.applicationDirectory);
-    const alert = this.alertCtrl.create({
-      title: 'Dir',
-      subTitle: this.file.externalDataDirectory,
-      buttons: ['ok']
-    });
-    alert.present();
-    const options: DocumentViewerOptions = {
-      title: 'My PDF'
-    };
-    this.fileopener.viewDocument("assets/file/file.pdf",'application/pdf',options);
+  openlink(url){
+    this.iab.create(url);
+    // console.log(this.file.applicationDirectory);
+    // const alert = this.alertCtrl.create({
+    //   title: 'Dir',
+    //   subTitle: this.file.externalDataDirectory,
+    //   buttons: ['ok']
+    // });
+    // alert.present();
+    // const options: DocumentViewerOptions = {
+    //   title: 'My PDF'
+    // };
+    // this.fileopener.viewDocument("assets/file/file.pdf",'application/pdf',options);
     // this.fileopener.open(this.file.+"/assets/file/file.pdf",'application/pdf')
 //     const options: DocumentViewerOptions = {
 //       title: 'My PDF'

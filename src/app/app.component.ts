@@ -51,6 +51,8 @@ export class MyApp {
       this.storage.set("user",null);
       this.storage.set("personal",null);
       this.storage.set("resp",null);
+      this.storage.set("timetable",null);
+    this.storage.set("caleve",null);
     }
     this.nav.setRoot(page.component);
   }

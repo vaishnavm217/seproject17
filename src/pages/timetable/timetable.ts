@@ -31,9 +31,11 @@ export class TimetablePage {
   mess : any;
   roll_count = 0;
   stat = "Start";
+  main_url: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,public geolocation: Geolocation,public loadingCtrl: LoadingController, public http: Http) {
   this.mess = "Attendance Not Started";
-  this.http.get("http://10.0.3.22:8000/api/add_view_SC/").map(res=>res.json()).subscribe((jsonresp)=>{
+  this.main_url="http://10.0.3.22:8000";
+  this.http.get(this.main_url+"/api/add_view_SC/").map(res=>res.json()).subscribe((jsonresp)=>{
     for(let i =0;i<jsonresp.length;i++)
     {
       if(jsonresp[i].Course_ID==this.course_id)
@@ -51,7 +53,7 @@ export class TimetablePage {
       console.log("refress1");
     this.sub=this.geolocation.watchPosition({enableHighAccuracy:true}).catch(this.handleError)
       .subscribe(position => {
-
+          position={coords:{accuracy:30,latitude:89,longitude:90}};
         console.log("Subs went!");
        console.log(position);
     if(position.coords.accuracy<=30000 && this.flag)
@@ -70,8 +72,8 @@ export class TimetablePage {
       });
       // loading.present();
       let options = new RequestOptions({ headers: headers});
-      this.http.post('http://10.0.3.22:8000/api/add_view_attendance_sessions/',body,options).subscribe((jsonr)=>{console.log("success!");},(err)=>{console.log("Failed!");});
-      this.http.get("http://10.0.3.22:8000/api/add_view_attendance_sessions/").map(res=>res.json()).subscribe((jsonresp)=>{
+      this.http.post(this.main_url+'/api/add_view_attendance_sessions/',body,options).subscribe((jsonr)=>{console.log("success!");},(err)=>{console.log("Failed!");});
+      this.http.get(this.main_url+"/api/add_view_attendance_sessions/").map(res=>res.json()).subscribe((jsonresp)=>{
      // this.mess+="<br>Lecture id:"+this.atten_id;
       this.atten_id = jsonresp[jsonresp.length-1].Session_ID;
         console.log("attend",this.atten_id);
@@ -104,7 +106,7 @@ else{
   }
   refreshfn(){
     console.log("Hello");
-    this.http.get("http://10.0.3.22:8000/api/add_view_attendance/").map(res=>res.json()).subscribe((jsonresp)=>{
+    this.http.get(this.main_url+"/api/add_view_attendance/").map(res=>res.json()).subscribe((jsonresp)=>{
     console.log("found resp",jsonresp);
     for(let i=0;i<jsonresp.length;i++)
       {

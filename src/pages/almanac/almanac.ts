@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the AlmanacPage page.
@@ -24,9 +25,28 @@ type: string = "month";
 	  mode:'month',
 	  currentDate: this.selectedDay
   };
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-  this.eventSource= this.createRandomEvents();
+  course_dict={};
+  time_table_eve=[];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,public storage: Storage) {
+    this.storage.get("timetable").then((val)=>{
+        this.storage.get("courses").then((val1)=>{
+            for(let i of val)
+            {
+                for(let j=0;j<Object.keys(val1).length;j++){
+                if(i.Course_ID==val1[j].Course_ID)
+                {
+                i["Course_Name"] = val1[j].Course_Name;
+                this.time_table_eve.push(i)
+                }
+                //console.log(val);
+            }
+            }
+            console.log(val1,val);
+            this.eventSource= this.createRandomEvents();
+        });
+        
+    });
+  
   }
   addEvent(){
 
@@ -41,82 +61,26 @@ type: string = "month";
 
   	  //  var link = 'https://www.docconsult.co.in/api/apicalendarevent.php';
   		var events_cal = [];
-  		var events = [];
-      /*    this.storage.get('userData').then((val) => {
-  			console.log('Your id is', val['id']);
-  			var myData = JSON.stringify({id: val['id']});
-  			this.http.post(link, myData).map(res => res.json())
-  			.subscribe(data => {
-  			this.data.response = data; //https://stackoverflow.com/questions/39574305/property-body-does-not-exist-on-type-response
-  			this.data.length=Object.keys(this.data.response).length;
-  		console.log(this.data.response);
-  		console.log('Hello!');
-          console.log(Object.keys(this.data.response).length);
-  		for (var i = 0; i < this.data.length; i += 1) {
-  			var startt= new Date(this.data.response[i].app_date + ' ' + this.data.response[i].app_time);
-  			var endt=   new Date(this.data.response[i].app_date + ' ' + this.data.response[i].app_time);
-  			endt.setMinutes(startt.getMinutes()+ parseInt(this.data.response[i].duration) );
-  			events.push({
-                      title: 'Appointment with ' + this.data.response[i].patient_name ,
-                      startTime: new Date(this.data.response[i].app_date + ' ' + this.data.response[i].app_time),
-                      //endTime: new Date(this.data.response[i].app_date + ' ' + this.data.response[i].app_time),
-                      endTime: endt ,
-  					allDay: false
-                  });
-
-  			console.log('Hello');
-  			console.log(this.data.response[i].app_date + ' ' + this.data.response[i].app_time);
-  			console.log('Duration ' + this.data.response[i].duration);
-  		}
-  		//this.eventSource=events_cal;
-
-
-
-  			}, error => {
-
-  			console.log("Oooops!");
-
-  			});
-
-
-  		});
-
-  		console.log(this.data.length);
-  		console.log('Hello!');
-          console.log(this.data.response);
-      */
-          for (var i = 0; i < 50; i += 1) {
-              var date = new Date();
-              var eventType = Math.floor(Math.random() * 2);
-              var startDay = Math.floor(Math.random() * 90) - 45;
-              var endDay = Math.floor(Math.random() * 2) + startDay;
-              var startTime;
-              var endTime;
-              if (eventType === 0) {
-                  startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-                  if (endDay === startDay) {
-                      endDay += 1;
-                  }
-                  endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
+          var events = [];
+          var startDate=new Date("1 August 2017 00:00:00");
+          var Enddate=new Date("11 December 2017 00:00:00");
+          for (var i = startDate; i <=Enddate; i.setDate(i.getDate()+1)) {
+                    for(var j=0;j<this.time_table_eve.length;j++)
+                    {
+                    if(i.getDay()==(this.time_table_eve[j].T_days+8)%7)
+                    {console.log(i);
+                    var temp = this.time_table_eve[j].Start_time.split(":");
+                    var temp1 = this.time_table_eve[j].End_time.split(":");
+                  var startTime = new Date(i.getFullYear(), i.getMonth(), i.getDate() ,temp[0],temp[1],temp[2]);
+                  var endTime = new Date(i.getFullYear(), i.getMonth(), i.getDate() ,temp1[0],temp1[1],temp1[2]);
                   events.push({
-                      title: 'All Day - ' + i,
-                      startTime: startTime,
-                      endTime: endTime,
-                      allDay: true
-                  });
-              } else {
-
-                  var startMinute = Math.floor(Math.random() * 24 * 60);
-                  var endMinute = Math.floor(Math.random() * 180) + startMinute;
-                  startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-                  endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-                  events.push({
-                      title: 'Event - ' + i,
+                      title: this.time_table_eve[j].Course_Name+" - "+this.time_table_eve[j].Class_ID,
                       startTime: startTime,
                       endTime: endTime,
                       allDay: false
                   });
-              }
+                }
+                }
           }
 
           return events;
@@ -147,10 +111,6 @@ onTimeSelected(ev){
 
 }
 onEventSelected(event){
-  console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
-  var dateString = '2011-04-11T10:20:30Z'
-  var newDate = new Date(dateString);
-    console.log(newDate);
   let alert = this.alertCtrl.create({
     title: '' + event.title,
     subTitle: event.startTime,

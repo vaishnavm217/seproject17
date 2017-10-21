@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Course Detail</ion-title>
+    <ion-title>{{course_details.Name}}</ion-title>
 
 
 
@@ -26,7 +26,7 @@
     Assignment
   </ion-segment-button>
   <ion-segment-button value="Records">
-    Records
+    Students
   </ion-segment-button>
     <!-- <div>{{socs}}</div> -->
   </ion-segment>
@@ -38,27 +38,29 @@
 <ion-item>
   Course Structure
 </ion-item>
+<ion-item>{{course_details.desp}}</ion-item>
 </ion-list>
 
 <ion-list *ngSwitchCase="'Assignment'">
 <ion-item>
 Assignment
 </ion-item>
-<ion-card >
+<ion-card *ngFor="let i of assignm" >
   <ion-item>
   <ion-avatar item-start>
     <img src="assets/img/file.png">
   </ion-avatar>
 
   <ion-card-header>
-    Assignment-2
+    Assignment-{{i.Assign_ID}}
   </ion-card-header>
   <ion-card-content>
-    <h3><b>Deadline:</b>18th Oct 2017</h3>
-    <h3> 05:30 p.m </h3>
-    <button ion-button (click)="OpenFile()" icon-start>
+    <h3><b>Deadline:</b>{{i.End_Time | date}}</h3>
+    <h3>{{i.End_Time | date:'shortTime' }}</h3>
+    <button ion-button icon-start (click)="openlink('https://iiitssmartattendance.herokuapp.com'+i.Assignment_File)">
         <ion-icon name="star"></ion-icon>
-          Download
+          View
+        
     </button>
   </ion-card-content>
 </ion-item>
@@ -69,14 +71,14 @@ Assignment
 <!-- ########################################################## -->
 <ion-list *ngSwitchCase="'Records'">
 <ion-item>
-Records
+Students
 </ion-item>
-<ion-card (click)="OpenCourse('CoursedetailPage')">
+<ion-card *ngFor="let i of students">
   <ion-card-header>
-    <b>Assignment-1</b>
+    <b>{{i.Num}}</b>
   </ion-card-header>
   <ion-card-content>
-    <h2>End Date : 10 Oct 2017 05:30 pm</h2>
+    <h2>{{i.Name}}</h2>
   </ion-card-content>
 </ion-card>
 </ion-list>

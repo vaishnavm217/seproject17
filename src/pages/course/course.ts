@@ -32,8 +32,8 @@ export class CoursePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursePage');
   }
-  OpenCourse(page){
-    this.navCtrl.push(page);
+  OpenCourse(page,id){
+    this.navCtrl.push(page,{"id":id});
   }
 
 }
