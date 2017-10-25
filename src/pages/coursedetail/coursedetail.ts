@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { File } from '@ionic-native/file';
-import { FileOpener } from '@ionic-native/file-opener';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
@@ -27,11 +25,19 @@ export class CoursedetailPage {
   course : any;
   students= [];
   assignm =[]
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public file : File, public fileopener: DocumentViewer,public storage: Storage, public http:Http,public iab:InAppBrowser) {
+  options: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public storage: Storage, public http:Http,public iab:InAppBrowser) {
   this.course="Structure";
   this.course_id=this.navParams.get("id");
   console.log(this.course_id);
+  this.storage.get("user").then((user)=>{
+    let headers = new Headers({
+      'Content-Type' : 'application/json; charset=utf-8',
+      'Authorization': 'JWT '+user.token
+    });
+    this.options = new RequestOptions({headers:headers})
   this.storage.get("courses").then((val)=>{
+    
     let temp ={};
     console.log();
     for(let i=0;val[i]!=undefined;i++){
@@ -44,7 +50,7 @@ export class CoursedetailPage {
   this.course_details=temp;
   console.log("details",this.course_details);
   });
-  this.http.get("https://iiitssmartattendance.herokuapp.com/api/add_view_assignments/")
+  this.http.get("https://iiitssmartattendance.herokuapp.com/api/add_view_assignments/",this.options)
   .map(res=>res.json())
   .subscribe((res)=>{
     for(let i of res)
@@ -63,11 +69,8 @@ export class CoursedetailPage {
 let body={
   course_id:this.course_id
 };
-let headers = new Headers({
-  'Content-Type' : 'application/json; charset=utf-8'
-});
-let options = new RequestOptions({headers:headers});
-  this.http.post("https://iiitssmartattendance.herokuapp.com/api/courses_rel_students/",body,options)
+
+  this.http.post("https://iiitssmartattendance.herokuapp.com/api/courses_rel_students/",body,this.options)
   .map(res=>res.json())
   .subscribe((res)=>{
     for(let i of Object.keys(res))
@@ -76,7 +79,7 @@ let options = new RequestOptions({headers:headers});
     }
     console.log("lol",this.students);
   });
-
+});
 }
 
 
@@ -86,7 +89,7 @@ let options = new RequestOptions({headers:headers});
     console.log('ionViewDidLoad CoursedetailPage');
   }
   openlink(url){
-    this.iab.create(url);
+    this.iab.create(url,'_system');
     // console.log(this.file.applicationDirectory);
     // const alert = this.alertCtrl.create({
     //   title: 'Dir',

@@ -32,10 +32,17 @@ export class TimetablePage {
   roll_count = 0;
   stat = "Start";
   main_url: string;
+  headers : any;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,public geolocation: Geolocation,public loadingCtrl: LoadingController, public http: Http) {
-  this.mess = "Attendance Not Started";
-  this.main_url="http://10.0.3.22:8000";
-  this.http.get(this.main_url+"/api/add_view_SC/").map(res=>res.json()).subscribe((jsonresp)=>{
+  this.storage.get("user").then((val)=>{
+    this.mess = "Attendance Not Started";
+  this.main_url="https://iiitssmartattendance.herokuapp.com";
+  this.headers = new Headers({
+    'Content-Type' : 'application/json; charset=utf-8',
+    'Authorization' : 'JWT '+val.token
+});
+let options = new RequestOptions({ headers: this.headers});
+  this.http.get(this.main_url+"/api/add_view_SC/",options).map(res=>res.json()).subscribe((jsonresp)=>{
     for(let i =0;i<jsonresp.length;i++)
     {
       if(jsonresp[i].Course_ID==this.course_id)
@@ -44,6 +51,7 @@ export class TimetablePage {
       }
     }
   });
+});
   }
   refress()
   {
@@ -67,13 +75,10 @@ export class TimetablePage {
         Course_Slot:1,Date_time:new Date(),Status:1,Location:loc
       };
       console.log(loc);
-      let headers = new Headers({
-        'Content-Type' : 'application/json',
-      });
       // loading.present();
-      let options = new RequestOptions({ headers: headers});
+      let options = new RequestOptions({ headers: this.headers});
       this.http.post(this.main_url+'/api/add_view_attendance_sessions/',body,options).subscribe((jsonr)=>{console.log("success!");},(err)=>{console.log("Failed!");});
-      this.http.get(this.main_url+"/api/add_view_attendance_sessions/").map(res=>res.json()).subscribe((jsonresp)=>{
+      this.http.get(this.main_url+"/api/add_view_attendance_sessions/",options).map(res=>res.json()).subscribe((jsonresp)=>{
      // this.mess+="<br>Lecture id:"+this.atten_id;
       this.atten_id = jsonresp[jsonresp.length-1].Session_ID;
         console.log("attend",this.atten_id);
@@ -106,14 +111,16 @@ else{
   }
   refreshfn(){
     console.log("Hello");
-    this.http.get(this.main_url+"/api/add_view_attendance/").map(res=>res.json()).subscribe((jsonresp)=>{
+    let options = new RequestOptions({ headers: this.headers});
+    this.http.get(this.main_url+"/api/add_view_attendance/",options).map(res=>res.json()).subscribe((jsonresp)=>{
     console.log("found resp",jsonresp);
     for(let i=0;i<jsonresp.length;i++)
       {
+        
         if(jsonresp[i].ASession_ID==this.atten_id)
         {
           if(!this.studs[jsonresp[i].Student_ID])
-          {this.studs[jsonresp[i].Student_ID] = 1;
+          {this.studs[jsonresp[i].Student_ID] = "Present";
             this.roll_count+=1;
           }
         }

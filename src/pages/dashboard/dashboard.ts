@@ -21,11 +21,13 @@ export class DashboardPage {
   time_table_eve=[];
   num_lec : Number;
   course_time : Date;
+  name : any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
     this.course_name="";
     this.course_time=null;
     this.course_id=-1;
     this.num_lec=0;
+    this.storage.get("user").then((user)=>{this.name = user.first_name+" "+user.last_name});
     this.storage.get("timetable").then((val)=>{
       this.storage.get("courses").then((val1)=>{
         var temp=new Date();

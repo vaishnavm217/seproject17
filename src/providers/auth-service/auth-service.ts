@@ -22,6 +22,7 @@ export class AuthServiceProvider {
     adduserurl:string;
     base_url : string;
     stat: number;
+    options : any;
     constructor(
         public http: Http,
         public storage: Storage,
@@ -30,19 +31,27 @@ export class AuthServiceProvider {
         this.http = http;
         this.base_url = "https://iiitssmartattendance.herokuapp.com";
         this.loginurl = this.base_url+"/api/validate_user/";
-        
 
     }
 
     logIn(user_credentials) {
         
     }
-    getNessdata()
+    getNessdata(token)
     {
+       
+            let headers = new Headers({
+                'Content-Type' : 'application/json; charset=utf-8',
+                'Authorization' : 'JWT '+token
+            });
+            this.options = new RequestOptions({ headers: headers});
+            console.log("inside",this.options)
+        
+        console.log(this.options)
         this.storage.get("timetable").then((val)=>{
             if(val==null)
             {
-                this.http.get(this.base_url+"/api/add_view_timetable/")
+                this.http.get(this.base_url+"/api/add_view_timetable/",this.options)
                 .map(res=>res.json())
                 
                 .subscribe((jsonresp)=>{
@@ -61,7 +70,7 @@ export class AuthServiceProvider {
         this.storage.get("roles_dict").then((val) => {
             if(val==null)
             {
-                    this.http.get(this.base_url+"/api/add_view_roles/")
+                    this.http.get(this.base_url+"/api/add_view_roles/",this.options)
                     .map(res=>res.json())
                     .subscribe((jsonresp)=>{
                         let roles = jsonresp;
@@ -85,7 +94,7 @@ export class AuthServiceProvider {
         this.storage.get("course").then((val) => {
             if(val==null)
             {
-                this.http.get(this.base_url+"/api/add_view_courses/")
+                this.http.get(this.base_url+"/api/add_view_courses/",this.options)
                 .map(res=>res.json())
                 .subscribe((jsonresp)=>{
                     this.storage.set("course",jsonresp);
@@ -99,7 +108,7 @@ export class AuthServiceProvider {
         this.storage.get("dept").then((val) => {
             if(val==null)
             {
-                this.http.get(this.base_url+"/api/departments/")
+                this.http.get(this.base_url+"/api/departments/",this.options)
                 .map(res=>res.json())
                 .subscribe((jsonresp)=>
                 {
@@ -114,7 +123,7 @@ export class AuthServiceProvider {
         this.storage.get("caleve").then((val) => {
             if(val==null)
             {
-                this.http.get(this.base_url+"/api/add_view_events/")
+                this.http.get(this.base_url+"/api/add_view_events/",this.options)
                 .map(res=>res.json())
                 .subscribe((jsonresp)=>
                 {
@@ -126,7 +135,6 @@ export class AuthServiceProvider {
                 });
             }
         });
-        
         
     }
 //// Vaishnav's function

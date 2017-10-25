@@ -40,7 +40,6 @@ export class LoginPage {
         public http: Http,
         public alertCtrl:AlertController,
         public auth: AuthServiceProvider) {
-            this.auth.getNessdata();
             this.storage.get("login_stat").then((val) => {
                 console.log(val);
                 if(val)
@@ -86,6 +85,7 @@ export class LoginPage {
                 this.storage.get("roles_dict").then((val)=>{
                     console.log("val!!",val,jsonres)
                     console.log("Hallo");
+                    
                     if(val[jsonres.Role]=="Faculty")
                     {
                         this.storage.set("user",jsonres);
@@ -93,7 +93,8 @@ export class LoginPage {
                             'faculty_id': jsonres.Person_ID
                         };
                         let headers = new Headers({
-                            'Content-Type' : 'application/json; charset=utf-8'
+                            'Content-Type' : 'application/json; charset=utf-8',
+                            'Authorization' : 'JWT '+jsonres.token
                         });
                         let options = new RequestOptions({ headers: headers});
                         this.http.post(base_url+"/api/faculty_rel_courses/", body, options)
@@ -107,6 +108,7 @@ export class LoginPage {
                         this.navCtrl.setRoot(DashboardPage);
                         this.storage.set("login_stat",true);
                         loading.dismiss();
+                        this.auth.getNessdata(jsonres.token);
                     }
                     else
                     {
