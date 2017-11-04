@@ -3,6 +3,9 @@
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
+  {{name}} displays with the user logged in.
+  {{course_name}} informs which is the next lecture
+  
 -->
 <ion-header>
   <ion-navbar>
@@ -16,8 +19,8 @@
 <ion-content padding>
 <ion-grid>
 <ion-row>
-  <ion-list><h1>Hi {{name}}</h1></ion-list>
-</ion-row>
+  <ion-list><h1>Hi {{name}}</h1></ion-list> 
+</ion-row> 
 <ion-row>
   <ion-col col-12>
     <ion-card (click)="openPage()">
