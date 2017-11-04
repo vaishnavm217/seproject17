@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';   //importing Component
 import { IonicPage, NavController, NavParams } from 'ionic-angular';  //importing IonicPage, NavController, NavParams
-import { Storage } from '@ionic/storage';
-import { DatePipe } from '@angular/common';
+import { Storage } from '@ionic/storage';  //importing Storage
+import { DatePipe } from '@angular/common'; // importing Datapipe
 /**
  * Generated class for the DashboardPage page.
  *
