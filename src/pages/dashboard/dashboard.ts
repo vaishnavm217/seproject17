@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';   //importing Component
+import { IonicPage, NavController, NavParams } from 'ionic-angular';  //importing IonicPage, NavController, NavParams
 import { Storage } from '@ionic/storage';
 import { DatePipe } from '@angular/common';
 /**
@@ -22,24 +22,14 @@ export class DashboardPage {
   num_lec : Number;
   course_time : Date;
   name : any;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-
-  }
-
-  ionViewDidLoad() {
     this.course_name="";
     this.course_time=null;
     this.course_id=-1;
     this.num_lec=0;
     this.storage.get("user").then((user)=>{this.name = user.first_name+" "+user.last_name});
-    this.storage.get("timetable").catch().then((val)=>{
-      this.storage.get("courses").catch().then((val1)=>{
-        console.log("lol",val);
-        console.log("lol1",val1);
-        if(val==null){
-          this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      }
+    this.storage.get("timetable").then((val)=>{
+      this.storage.get("courses").then((val1)=>{
         var temp=new Date();
           for(let i of val)
           {
@@ -52,7 +42,7 @@ export class DashboardPage {
               }
               //console.log(val);
           }
-
+          
           }
 
           var temp1 = {"Start_time":temp};
@@ -71,10 +61,13 @@ export class DashboardPage {
             this.course_id = temp2[temp2.indexOf(temp1)+1].Course_ID;
             this.num_lec = temp2.length-1;
           }
-
-
+          
         });
       });
+  }
+
+  ionViewDidLoad() {
+    
     console.log('ionViewDidLoad DashboardPage');
   }
 
