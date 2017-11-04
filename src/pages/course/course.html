@@ -5,6 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+<!-- Navigation Bar -->
 
   <ion-navbar>
     <button ion-button menuToggle>
@@ -15,7 +16,7 @@
 
 </ion-header>
 
-
+<!-- List of Courses -->
 <ion-content padding>
   <div>
 <ion-card *ngFor="let k of courses" (click)="OpenCourse('CoursedetailPage',k.id)">
