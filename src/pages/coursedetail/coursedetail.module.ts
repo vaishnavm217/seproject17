@@ -1,3 +1,4 @@
+// importing modules for ionic
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CoursedetailPage } from './coursedetail';
