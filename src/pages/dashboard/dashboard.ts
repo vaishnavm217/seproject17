@@ -10,6 +10,9 @@ import {AlmanacPage} from "../almanac/almanac";
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
+ * This is the dashboard of the Student App.
+ * Timetable displays the timetable of the day.
+ * Course Name provides the current course.
  */
 
 @IonicPage()
