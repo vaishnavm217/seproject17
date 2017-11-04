@@ -13,6 +13,8 @@ import {AlmanacPage} from "../almanac/almanac";
  * This is the dashboard of the Student App.
  * Timetable displays the timetable of the day.
  * Course Name provides the current course.
+ * Course Time informs about the next session of the course.
+ * Number of Lectures displays the number of lectures of a particular day.
  */
 
 @IonicPage()
