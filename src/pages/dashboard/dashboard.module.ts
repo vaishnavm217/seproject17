@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { DashboardPage } from './dashboard';
+import { NgModule } from '@angular/core'; //importing NgModule  
+import { IonicPageModule } from 'ionic-angular';  //Importing IonicPageModule
+import { DashboardPage } from './dashboard';  //importing dashboard
 
 @NgModule({
   declarations: [
