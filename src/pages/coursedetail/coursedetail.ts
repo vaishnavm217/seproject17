@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component,Input} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { AlertController,LoadingController } from 'ionic-angular';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { NgForm } from '@angular/forms';
 /**
  * Generated class for the CoursedetailPage page.
  *
@@ -18,15 +20,21 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   selector: 'page-coursedetail',
   templateUrl: 'coursedetail.html',
 })
+
 export class CoursedetailPage {
 
   course_id : any;
   course_details = {};
   course : any;
   students= [];
+  temp_students = [];
   assignm =[]
   options: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public storage: Storage, public http:Http,public iab:InAppBrowser) {
+  login: {file?: string}={};
+  @Input() accept = 'image/*';
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public storage: Storage, public http:Http,public iab:InAppBrowser,public loadingCtrl: LoadingController)
+  {
+
   this.course="Structure";
   this.course_id=this.navParams.get("id");
   console.log(this.course_id);
@@ -37,7 +45,7 @@ export class CoursedetailPage {
     });
     this.options = new RequestOptions({headers:headers})
   this.storage.get("courses").then((val)=>{
-    
+
     let temp ={};
     console.log();
     for(let i=0;val[i]!=undefined;i++){
@@ -69,20 +77,30 @@ export class CoursedetailPage {
 let body={
   course_id:this.course_id
 };
-
   this.http.post("https://iiitssmartattendance.herokuapp.com/api/courses_rel_students/",body,this.options)
   .map(res=>res.json())
   .subscribe((res)=>{
+
     for(let i of Object.keys(res))
     {
-      this.students.push({"Name":res[i].First_Name+" "+res[i].Last_Name,"Num":i});
+      this.students.push({"Name":res[i].first_name+" "+res[i].last_name,"Num":i});
     }
+    this.temp_students=this.students;
     console.log("lol",this.students);
+    console.log(res);
   });
 });
 }
 
-
+getItems(ev){
+  this.temp_students = this.students;
+  let val = ev.target.value;
+  if (val && val.trim() != '') {
+      this.temp_students = this.temp_students.filter((item) => {
+        return (item.Name.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.Num.toLowerCase().indexOf(val.toLowerCase()) > -1 );
+      });
+    }
+}
 
 
   ionViewDidLoad() {
@@ -108,4 +126,15 @@ let body={
 // this.document.viewDocument('../../assets/file/file.pdf', , options);
   }
 
+
 }
+// @Component({
+//   template:`<input type="file" accept="*/*" id="upload" />`
+// }
+// )
+// class Profile {
+
+//  constructor(params: NavParams) {
+//    console.log('UserId', params.get('userId'));
+//  }
+// }

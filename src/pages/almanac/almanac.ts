@@ -59,8 +59,6 @@ type: string = "month";
 
   createRandomEvents() {
 
-  	  //  var link = 'https://www.docconsult.co.in/api/apicalendarevent.php';
-  		var events_cal = [];
           var events = [];
           var startDate=new Date("1 August 2017 00:00:00");
           var Enddate=new Date("11 December 2017 00:00:00");

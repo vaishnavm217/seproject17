@@ -60,11 +60,15 @@ Assignment
     <button ion-button icon-start (click)="openlink('https://iiitssmartattendance.herokuapp.com'+i.Assignment_File)">
         <ion-icon name="star"></ion-icon>
           View
-        
+
     </button>
   </ion-card-content>
 </ion-item>
 </ion-card>
+<!-- <ion-fab bottom right>
+  <button ion-fab (click)="presentPrompt()"><ion-icon name="add"></ion-icon></button>
+</ion-fab> -->
+
 
 </ion-list>
 
@@ -73,7 +77,14 @@ Assignment
 <ion-item>
 Students
 </ion-item>
-<ion-card *ngFor="let i of students">
+<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<ion-card *ngIf="students.length==0">
+
+  <ion-card-content>
+<ion-spinner ></ion-spinner>Loading
+  </ion-card-content>
+</ion-card>
+<ion-card  *ngFor="let i of temp_students">
   <ion-card-header>
     <b>{{i.Num}}</b>
   </ion-card-header>

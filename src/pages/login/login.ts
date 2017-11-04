@@ -65,6 +65,7 @@ export class LoginPage {
         this.passsubmitted = false;
         let loading = this.loadingCtrl.create({
               content: "<div>Logging in</div>",
+              showBackdrop: false,
           });
         loading.present();
         let body = {
@@ -85,7 +86,7 @@ export class LoginPage {
                 this.storage.get("roles_dict").then((val)=>{
                     console.log("val!!",val,jsonres)
                     console.log("Hallo");
-                    
+                    this.auth.getNessdata(jsonres.token);
                     if(val[jsonres.Role]=="Faculty")
                     {
                         this.storage.set("user",jsonres);
@@ -105,10 +106,9 @@ export class LoginPage {
                         });
                         loading.setContent("Success!");
                         this.showToast("Welcome "+jsonres.first_name+" "+jsonres.last_name);
-                        this.navCtrl.setRoot(DashboardPage);
                         this.storage.set("login_stat",true);
                         loading.dismiss();
-                        this.auth.getNessdata(jsonres.token);
+                        this.navCtrl.setRoot(DashboardPage);
                     }
                     else
                     {
@@ -121,7 +121,7 @@ export class LoginPage {
                           alert.present();
                     }
 
-                    
+
             });
             },(error)=>
             {
@@ -130,7 +130,7 @@ export class LoginPage {
                 if(Object.keys(error).indexOf("status")!=-1 && error.status.toString()=="404")
                 {
                     console.log("Went");
-                    loading.dismiss();            
+                    loading.dismiss();
                     const alert = this.alertCtrl.create({
                         title: 'Login Failed',
                         subTitle: 'Wrong Credentials',
@@ -139,8 +139,8 @@ export class LoginPage {
                       alert.present();
                 }
                 //  this.handleError(error);
-               
-            }); 
+
+            });
     }
       else {
           if(this.login.ph_number)
