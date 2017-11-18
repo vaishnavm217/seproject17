@@ -20,7 +20,7 @@
 </ion-row>
 <ion-row>
   <ion-col col-12>
-    <ion-card >
+    <ion-card (click)="openPage()">
       <ion-card-content style="text-align:center;background-color:red;color:white;">
         NEXT LECTURE<br>{{course_name}}{{ course_time| date:'shortTime'}}
       </ion-card-content>
@@ -29,7 +29,7 @@
 </ion-row>
 <ion-row>
 <ion-col col-6>
-<ion-card >
+<ion-card (click)="openPage()" >
   <ion-card-content style="text-align:center;background-color:#488AFF;color:white;">
     Lectures Today<br>{{num_lec}}
   </ion-card-content>

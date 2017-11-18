@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { CoursedetailPage } from '../coursedetail/coursedetail';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
+
 /**
  * Generated class for the CoursePage page.
  *
@@ -14,10 +16,10 @@ import { CoursedetailPage } from '../coursedetail/coursedetail';
   selector: 'page-course',
   templateUrl: 'course.html',
 })
-/* JS starts here */ 
+/* JS starts here */
 export class CoursePage {
   courses: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,public auth:AuthServiceProvider) {
     this.storage.get("courses").then((val)=>{
       let temp =[];
       console.log(val.keys);

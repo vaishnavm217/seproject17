@@ -8,6 +8,8 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { NgForm } from '@angular/forms';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
+
 /**
  * Generated class for the CoursedetailPage page.
  *
@@ -32,9 +34,8 @@ export class CoursedetailPage {
   options: any;
   login: {file?: string}={};
   @Input() accept = 'image/*';
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public storage: Storage, public http:Http,public iab:InAppBrowser,public loadingCtrl: LoadingController)
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public storage: Storage, public http:Http,public iab:InAppBrowser,public loadingCtrl: LoadingController,public auth:AuthServiceProvider)
   {
-
   this.course="Structure";
   this.course_id=this.navParams.get("id");
   console.log(this.course_id);
@@ -83,7 +84,7 @@ let body={
 
     for(let i of Object.keys(res))
     {
-      this.students.push({"Name":res[i].first_name+" "+res[i].last_name,"Num":i});
+      this.students.push({"Name":res[i].LDAP.first_name+" "+res[i].LDAP.last_name,"Num":""+res[i].Person_ID});
     }
     this.temp_students=this.students;
     console.log("lol",this.students);
@@ -106,24 +107,17 @@ getItems(ev){
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursedetailPage');
   }
+  openlink1(url){
+    let temp = this.iab.create(url,'_blank');
+    temp.on("exit").subscribe((eve)=>{
+      this.navCtrl.pop();
+      this.navCtrl.push("CoursedetailPage",{"id":this.course_id});
+    })
+  }
+
+
   openlink(url){
-    this.iab.create(url,'_system');
-    // console.log(this.file.applicationDirectory);
-    // const alert = this.alertCtrl.create({
-    //   title: 'Dir',
-    //   subTitle: this.file.externalDataDirectory,
-    //   buttons: ['ok']
-    // });
-    // alert.present();
-    // const options: DocumentViewerOptions = {
-    //   title: 'My PDF'
-    // };
-    // this.fileopener.viewDocument("assets/file/file.pdf",'application/pdf',options);
-    // this.fileopener.open(this.file.+"/assets/file/file.pdf",'application/pdf')
-//     const options: DocumentViewerOptions = {
-//       title: 'My PDF'
-//     };
-// this.document.viewDocument('../../assets/file/file.pdf', , options);
+    let temp = this.iab.create(url,'_system');
   }
 
 

@@ -6,7 +6,8 @@ import {
     LoadingController,
     ToastController,
     Events,
-    AlertController} from 'ionic-angular';
+    AlertController,
+    App} from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -31,6 +32,7 @@ export class LoginPage {
     passsubmitted = false;
     usersubmitted = false;
   constructor(
+        public app: App,
         public navCtrl: NavController,
         public navParams: NavParams,
         public loadingCtrl: LoadingController,
@@ -40,6 +42,9 @@ export class LoginPage {
         public http: Http,
         public alertCtrl:AlertController,
         public auth: AuthServiceProvider) {
+          this.app.viewWillLeave.subscribe((event)=>{
+            console.log("left page",event);
+          })
             this.storage.get("login_stat").then((val) => {
                 console.log(val);
                 if(val)
@@ -83,13 +88,14 @@ export class LoginPage {
             .subscribe((jsonres)=>
             {
                     console.log("Correct!");
-                this.storage.get("roles_dict").then((val)=>{
-                    console.log("val!!",val,jsonres)
+                    console.log("val!!",jsonres)
                     console.log("Hallo");
-                    this.auth.getNessdata(jsonres.token);
-                    if(val[jsonres.Role]=="Faculty")
+                    if(jsonres.Role.Role_name=="Faculty")
                     {
+                        this.auth.getNessdata(jsonres.token).catch().then(()=>{
                         this.storage.set("user",jsonres);
+                        loading.dismiss();
+                        console.log("WOWOW");
                         let body = {
                             'faculty_id': jsonres.Person_ID
                         };
@@ -107,8 +113,8 @@ export class LoginPage {
                         loading.setContent("Success!");
                         this.showToast("Welcome "+jsonres.first_name+" "+jsonres.last_name);
                         this.storage.set("login_stat",true);
-                        loading.dismiss();
                         this.navCtrl.setRoot(DashboardPage);
+                        });
                     }
                     else
                     {
@@ -122,7 +128,7 @@ export class LoginPage {
                     }
 
 
-            });
+
             },(error)=>
             {
                 console.log(Object.keys(error));

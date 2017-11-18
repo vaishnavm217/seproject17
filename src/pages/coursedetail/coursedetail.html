@@ -12,11 +12,8 @@
 
 
   </ion-navbar>
+  <ion-toolbar>
 
-</ion-header>
-
-
-<ion-content padding>
 <!--cell padding -->
   <ion-segment  [(ngModel)]="course">
   <ion-segment-button value="Structure">
@@ -30,21 +27,22 @@
   </ion-segment-button>
     <!-- <div>{{socs}}</div> -->
   </ion-segment>
-
+</ion-toolbar>
+</ion-header>
 <!-- </div> -->
+<ion-content padding>
 <div class="cl2" [ngSwitch]="course">
 
 <ion-list *ngSwitchCase="'Structure'">
-<ion-item>
-  Course Structure
-</ion-item>
-<ion-item>{{course_details.desp}}</ion-item>
+<ion-card>
+  <ion-card-header>Course Structure</ion-card-header>
+  <ion-card-content>
+<p>{{course_details.desp}}</p>
+</ion-card-content></ion-card>
 </ion-list>
 
 <ion-list *ngSwitchCase="'Assignment'">
-<ion-item>
-Assignment
-</ion-item>
+<ion-scroll style="height:75vh;" scrollY="true">
 <ion-card *ngFor="let i of assignm" >
   <ion-item>
   <ion-avatar item-start>
@@ -65,19 +63,17 @@ Assignment
   </ion-card-content>
 </ion-item>
 </ion-card>
-<!-- <ion-fab bottom right>
-  <button ion-fab (click)="presentPrompt()"><ion-icon name="add"></ion-icon></button>
-</ion-fab> -->
-
+</ion-scroll>
+<ion-fab bottom right>
+  <button ion-fab (click)="openlink1('https://iiitssmartattendance.herokuapp.com/api/upload/')"><ion-icon name="add"></ion-icon></button>
+</ion-fab>
 
 </ion-list>
 
 <!-- ########################################################## -->
 <ion-list *ngSwitchCase="'Records'">
-<ion-item>
-Students
-</ion-item>
 <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<ion-scroll style="height:65vh;" scrollY="true">
 <ion-card *ngIf="students.length==0">
 
   <ion-card-content>
@@ -92,7 +88,9 @@ Students
     <h2>{{i.Name}}</h2>
   </ion-card-content>
 </ion-card>
+</ion-scroll>
 </ion-list>
+
 
 </div>
 

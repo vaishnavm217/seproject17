@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service'
 
 /**
  * Generated class for the AlmanacPage page.
@@ -27,7 +28,7 @@ type: string = "month";
   };
   course_dict={};
   time_table_eve=[];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,public storage: Storage,public auth:AuthServiceProvider) {
     this.storage.get("timetable").then((val)=>{
         this.storage.get("courses").then((val1)=>{
             for(let i of val)
@@ -44,9 +45,9 @@ type: string = "month";
             console.log(val1,val);
             this.eventSource= this.createRandomEvents();
         });
-        
+
     });
-  
+
   }
   addEvent(){
 

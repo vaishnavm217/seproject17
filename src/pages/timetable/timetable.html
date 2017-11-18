@@ -15,18 +15,25 @@
 
 </ion-header>
 <ion-content>
-<button ion-button block  (click)="refress()" style="text-align:center;background-color:red;">
+<button ion-button block  [disabled]="!started_class" [hidden]="show_final_button" (click)="refress()" style="text-align:center;background-color:red;">
 
-<h1 style="color:white;"> {{stat}} Attendance</h1>
+<h1 style="color:white;"> {{stat}}</h1>
 </button>
 <ion-card-content [hidden]="!started_class" style="text-align:center">
 <h1>{{mess}}</h1>
 <h1 >Attendance Count:{{roll_count}}</h1>
+<ion-list >
+<ion-item>
+  <ion-checkbox [checked]="show_stu" (click)="show_stu=!show_stu"></ion-checkbox><ion-label>Show</ion-label></ion-item></ion-list>
+<ion-scroll style="height:40vh;" scrollY="true">
 <ion-list>
-  <ion-item>  <ion-checkbox [checked]="show_stu" (click)="show_stu=!show_stu"></ion-checkbox><ion-label>Show</ion-label></ion-item>
-  <ion-item [hidden]="!show_stu" *ngFor="let i of stud_arr" >
-      <ion-checkbox [checked]="studs[i-1]=='Present'"></ion-checkbox><ion-label>{{name_arr[i].first_name+" "+name_arr[i].last_name}}</ion-label> -
+  <ion-item [hidden]="!show_stu" *ngFor="let i of name_arr" >
+      <ion-checkbox [(ngModel)]="i.checked" (ionChange)="true_total()"></ion-checkbox><ion-label>{{i.LDAP.first_name+" "+i.LDAP.last_name}}</ion-label>
  </ion-item>
 </ion-list>
+</ion-scroll>
+<button ion-button [hidden]="!show_final_button" style="text-align:center;" (click)="confirmfn()">
+<h1 style="color:white;">Confirm the Attendance</h1>
+</button>
 </ion-card-content>
 </ion-content>
