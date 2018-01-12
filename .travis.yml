@@ -3,6 +3,8 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && source ~/.nvm/nvm.sh && nvm install 6.11.2
   - npm install -g cordova
   - npm install -g ionic
+  - npm install -g ionic2-calendar@0.3.12
+  # - npm install -g cordova-plugin-file
 language: android
 jdk:
   - oraclejdk8
@@ -11,8 +13,8 @@ android:
     - tools
     - platform-tools
     - tools
-    - build-tools-26.0.2
-    - android-26
+    - build-tools-25.0.0
+    - android-25
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
@@ -20,12 +22,12 @@ before_install:
  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
  - export JAVA_HOME=$JAVA8_HOME
 script:
-  - npm install
+  - npm install -g
   - ionic cordova platform add android
   - ionic cordova prepare
   - ionic cordova build android --release
-  - keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
-  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore awesomekey.keystore /home/travis/build/vaishnavm217/seproject17/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name -storepass $keypass
+  - keytool -genkey -alias SE2017 -keyalg RSA -keysize 2048 -validity 10000 -keystore keystore.jks -dname "$dname" -storepass $pass -keypass $pass
+  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore.jks /home/travis/build/vaishnavm217/seproject17/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk SE2017 -storepass $pass
   # - git clone -b builds --single-branch  https://vaishnavm217:$GITHUB_API_KEY@github.com/vaishnavm217/Admin-app builds && cd builds
   # - mv /home/travis/build/vaishnavm217/Admin-app/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk /home/travis/build/vaishnavm217/Admin-app/builds/build-v$TRAVIS_BUILD_NUMBER.apk
   # - git add .

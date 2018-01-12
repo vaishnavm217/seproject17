@@ -16,11 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { FileOpener } from '@ionic-native/file-opener';
-import { File } from '@ionic-native/file';
-import { DocumentViewer} from '@ionic-native/document-viewer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { FileTransfer} from '@ionic-native/file-transfer';
 import { ProfilePage } from '../pages/profile/profile'
 @NgModule({
   declarations: [
@@ -57,12 +53,8 @@ import { ProfilePage } from '../pages/profile/profile'
     StatusBar,
     SplashScreen,
     Geolocation,
-    FileOpener,
-    DocumentViewer,
-    File,
     AuthServiceProvider,
     InAppBrowser,
-    FileTransfer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

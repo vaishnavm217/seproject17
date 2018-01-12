@@ -1,8 +1,6 @@
 import { Component,Input} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController,LoadingController } from 'ionic-angular';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { DatePipe } from '@angular/common';
